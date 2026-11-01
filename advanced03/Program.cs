@@ -1,8 +1,11 @@
 ﻿using Microsoft.VisualBasic;
+using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.Intrinsics.X86;
 using System.Xml;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
@@ -153,14 +156,41 @@ namespace advanced03
             var subset = new HashSet<int> { 1, 2 };
             Console.WriteLine($"Is {{1,2}} a subset of Set A? {subset.IsSubsetOf(setA)}");
 
+            // Exercise 5: Print Queue Simulator
+            //Simulate a printer queue
+            //Create a Queue<string> and enqueue 5 documents: "Report.pdf", "Invoice.pdf", "Letter.docx", "Resume.pdf", "Photo.jpg"
+            //Print the queue contents and Count
+            //Use Peek to see which document will print next(without removing)
+            //Process the queue: Dequeue each document and print "Printing: [name]"
+            //Try TryDequeue on the now - empty queue — what happens?
+
+            Queue<string> printQueue = new Queue<string>();
+            printQueue.Enqueue("Report.pdf");
+            printQueue.Enqueue("Invoice.pdf");
+            printQueue.Enqueue("Letter.docx");
+            printQueue.Enqueue("Resume.pdf");
+            printQueue.Enqueue("Photo.jpg");
+
+            Console.WriteLine("Queue contents: " + string.Join(", ", printQueue));
+            Console.WriteLine($"Queue Count: {printQueue.Count}");
+            string nextDoc = printQueue.Peek();
+            Console.WriteLine($"Next document to print: {nextDoc}");
+
+            while (printQueue.Count > 0)
+            {
+                string doc = printQueue.Dequeue();
+                Console.WriteLine($"Printing: {doc}");
+            }
 
 
-
+            bool success = printQueue.TryDequeue(out string? result);
+            Console.WriteLine($"TryDequeue Success? {success}"); // Output: False
+            Console.WriteLine($"Result: {result ?? "null"}");     // Output: null
 
 
 
 
 
         }
-        }
+    }
 }
