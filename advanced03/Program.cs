@@ -1,6 +1,9 @@
-﻿using System.Drawing;
+﻿using Microsoft.VisualBasic;
+using System.Drawing;
 using System.Globalization;
 using System.Numerics;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace advanced03
@@ -75,6 +78,57 @@ namespace advanced03
             {
                 Console.WriteLine($"Score: {entry.Key}, Player: {entry.Value}");
             }
+
+
+            //Exercise 3: Phone Book
+            //Build a phone book application.
+            //Create a Collection with 4 contacts(name → phone number)
+
+            Dictionary<string, string> phoneBook = new Dictionary<string, string>
+            {
+                { "Alice", "123-456-7890" },
+                { "Bob", "234-567-8901" },
+                { "Charlie", "345-678-9012" },
+                { "David", "456-789-0123" }
+            };
+            // Add a new contact using [] syntax (add or update)
+            phoneBook["Eve"] = "567-890-1234";
+            // Try adding a duplicate using .Add() — catch the exception and print the error
+            try
+            {
+                phoneBook.Add("Alice", "999-999-9999");
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+            // Try adding a duplicate using .TryAdd() — print whether it succeeded
+            bool added = phoneBook.TryAdd("Bob", "888-888-8888");
+            Console.WriteLine($"Trying to add duplicate 'Bob': {(added ? "Succeeded" : "Failed")}");
+            // Search for a contact that doesn’t exist
+            if (!phoneBook.ContainsKey("Frank"))
+            {
+                Console.WriteLine("Contact 'Frank' does not exist.");
+            }
+            // Get a contact with a fallback of "Not Found"
+            string contact = phoneBook.GetValueOrDefault("Grace", "Not Found");
+            Console.WriteLine($"Contact 'Grace': {contact}");
+            // Print all Keys on one line, then all Values on another line
+            Console.WriteLine("Contacts: " + string.Join(", ", phoneBook.Keys));
+            Console.WriteLine("Phone Numbers: " + string.Join(", ", phoneBook.Values));
+
+
+
+
+
+
+
+
+
+
+
+
+
         }
     }
 }
