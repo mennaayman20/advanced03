@@ -1,7 +1,9 @@
 ﻿using Microsoft.VisualBasic;
+using System.ComponentModel.DataAnnotations;
 using System.Drawing;
 using System.Globalization;
 using System.Numerics;
+using System.Xml;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -118,8 +120,38 @@ namespace advanced03
             Console.WriteLine("Phone Numbers: " + string.Join(", ", phoneBook.Values));
 
 
+            //Exercise 4: Unique Email Validator
+            //Use Collection to manage unique email addresses.
 
+            HashSet<string> emails = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            
+            emails.Add("ahmed@test.com");
+            emails.Add("AHMED@test.com");
+            emails.Add("sara@test.com");
+            emails.Add("Sara@Test.Com");
 
+            Console.WriteLine($"Count of unique emails: {emails.Count}");
+
+            // Create two sets
+            HashSet<int> setA = new HashSet<int> { 1, 2, 3, 4, 5 };
+            HashSet<int> setB = new HashSet<int> { 4, 5, 6, 7, 8 };
+
+            // Print the result of: UnionWith, IntersectWith, ExceptWith
+            var union = new HashSet<int>(setA);
+            union.UnionWith(setB);
+            Console.WriteLine($"Union: {string.Join(", ", union)}");
+
+            var intersection = new HashSet<int>(setA);
+            intersection.IntersectWith(setB);
+            Console.WriteLine($"Intersection: {string.Join(", ", intersection)}");
+
+            var difference = new HashSet<int>(setA);
+            difference.ExceptWith(setB);
+            Console.WriteLine($"Difference: {string.Join(", ", difference)}");
+
+            // Use IsSubsetOf to check if { 1,2} is a subset of Set A
+            var subset = new HashSet<int> { 1, 2 };
+            Console.WriteLine($"Is {{1,2}} a subset of Set A? {subset.IsSubsetOf(setA)}");
 
 
 
@@ -130,5 +162,5 @@ namespace advanced03
 
 
         }
-    }
+        }
 }
