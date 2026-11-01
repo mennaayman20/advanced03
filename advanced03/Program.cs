@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Numerics;
+using System.Runtime.Intrinsics.Arm;
 using System.Runtime.Intrinsics.X86;
+using System.Timers;
 using System.Xml;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
@@ -186,6 +188,33 @@ namespace advanced03
             bool success = printQueue.TryDequeue(out string? result);
             Console.WriteLine($"TryDequeue Success? {success}"); // Output: False
             Console.WriteLine($"Result: {result ?? "null"}");     // Output: null
+
+
+            //Exercise 6: Browser History(Undo)
+            //Simulate browser back / forward
+            //Create a Stack<string> for browser history
+            //Push 5 URLs: "google.com", "github.com", "stackoverflow.com", "youtube.com", "claude.ai"
+            //Use Peek to see the current page(top of stack)
+            //Press "back" 3 times using Pop — print each page you leave
+            //Print the current page after going back
+            //Try TryPop on an empty stack — what happens?
+
+            Stack<string> browserHistory = new Stack<string>();
+            browserHistory.Push("google.com");
+            browserHistory.Push("github.com");
+            browserHistory.Push("stackoverflow.com");
+            browserHistory.Push("youtube.com");
+            browserHistory.Push("claude.ai");
+            Console.WriteLine($"Current page: {browserHistory.Peek()}");
+            for (int i = 0; i < 3; i++)
+            {
+                string leftPage = browserHistory.Pop();
+                Console.WriteLine($"Going back from: {leftPage}");
+            }
+            Console.WriteLine($"Current page after going back: {browserHistory.Peek()}");
+            bool popSuccess = browserHistory.TryPop(out string? poppedPage);
+            Console.WriteLine($"TryPop Success? {popSuccess}"); // Output: True
+            Console.WriteLine($"Popped Page: {poppedPage ?? "null"}"); // Output: youtube.com
 
 
 
