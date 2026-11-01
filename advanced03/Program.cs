@@ -1,4 +1,6 @@
 ﻿using System.Drawing;
+using System.Globalization;
+using System.Numerics;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace advanced03
@@ -34,10 +36,45 @@ namespace advanced03
             List<string> gradeStrings = grades.Select(g => $"Grade: {g}").ToList();
             Console.WriteLine("Grade Strings: " + string.Join(", ", gradeStrings));
 
+            //Exercise 2: Leaderboard
 
+            //Create a leaderboard that automatically sorts players by score.
+            //Add: 500 = "Ahmed", 200 = "Sara", 800 = "Ali", 350 = "Mona"
+            //Print all entries(they should be sorted by score automatically)
+            
 
+            SortedDictionary<int, string> leaderboard = new SortedDictionary<int, string>();
+            leaderboard.Add(500, "Ahmed");
+            leaderboard.Add(200, "Sara");
+            leaderboard.Add(800, "Ali");
+            leaderboard.Add(350, "Mona");
 
+            Console.WriteLine("Leaderboard:");
+            foreach (var entry in leaderboard)
+            {
+                Console.WriteLine($"Score: {entry.Key}, Player: {entry.Value}");
+            }
 
+            //Access the first key and first value
+            int firstKey = leaderboard.Keys.First();
+            string firstValue = leaderboard.Values.First();
+            Console.WriteLine($"First Key: {firstKey}, First Value: {firstValue}");
+
+            //Check if score 500 exists
+            bool scoreExists = leaderboard.ContainsKey(500);
+            Console.WriteLine($"Score 500 exists: {scoreExists}");
+
+            //Safely get the player with score 999
+            string playerWithScore999 = leaderboard.GetValueOrDefault(999, "Player not found");
+            Console.WriteLine($"Player with score 999: {playerWithScore999}");
+
+            //Remove the player with score 200 and print the updated list
+            leaderboard.Remove(200);
+            Console.WriteLine("Leaderboard after removing player with score 200:");
+            foreach (var entry in leaderboard)
+            {
+                Console.WriteLine($"Score: {entry.Key}, Player: {entry.Value}");
+            }
         }
     }
 }
